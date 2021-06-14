@@ -3,7 +3,7 @@ import config from "./config.js";
 import { useState } from "react";
 
 export default function Home() {
-  //検索から天気を取得
+  //都市名から天気を取得
   async function getWeatherList(place) {
     const res = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${config.MyId}`
@@ -12,7 +12,7 @@ export default function Home() {
     return weatherlist;
   }
 
-  //現在地から天気を取得
+  //緯度、経度から天気を取得
   async function getCurrentWeatherList(thislat, thislon) {
     const res = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${thislat}&lon=${thislon}&id=524901&lang=ja&appid=${config.MyId}`
@@ -21,7 +21,7 @@ export default function Home() {
     return weatherlist;
   }
 
-  // //現在地を取得し、天気を表示
+  // //現在地を取得（緯度、経度）し、天気を表示
 
   function componentDidMount() {
     if (navigator.geolocation) {
@@ -40,16 +40,6 @@ export default function Home() {
     }
   }
 
-  //取得した天気情報に合わせてアナウンス表示
-  const [news, setNews] = useState("");
-  const [icon, setIcon] = useState("");
-  const [title, setTitle] = useState("");
-  const [temperature, setTemperature] = useState("");
-  const [pop, setPop] = useState("");
-  const [weathername, setWeatherName] = useState("");
-  const [inputvalue, setInputvalue] = useState("");
-
-
   //検索ボタンを押した後の処理
 
   function Weatherlistserch() {
@@ -59,6 +49,15 @@ export default function Home() {
       showWeatherNews(getWeatherList(inputvalue));
     }
   }
+
+  //取得した天気情報に合わせてアナウンス表示
+  const [news, setNews] = useState("");
+  const [icon, setIcon] = useState("");
+  const [title, setTitle] = useState("");
+  const [temperature, setTemperature] = useState("");
+  const [pop, setPop] = useState("");
+  const [weathername, setWeatherName] = useState("");
+  const [inputvalue, setInputvalue] = useState("");
 
   async function showWeatherNews(getWeather) {
     const weatherlist = await getWeather;
@@ -112,6 +111,7 @@ export default function Home() {
     setPop(`${Math.floor(weatherlist.list[0].pop * 100)}％`);
   }
 
+  //DOM操作
   return (
     <div className={classes.container}>
       <h1 className={classes.comment}>{news}</h1>

@@ -54,7 +54,7 @@
   color: rgb(255, 255, 255);
 }
 
-.prefecture,
+/* .prefecture, */
 .city,
 .container button {
   border-radius: 5px;
@@ -62,13 +62,13 @@
   outline: none;
   border: none;
 }
-.prefecture,
+/* .prefecture, */
 .city,
 .select {
   margin: 2px;
 }
 
-.prefecture:hover,
+/* .prefecture:hover, */
 .container button:hover,
 .city:hover {
   border: solid 1px rgb(143, 143, 143);

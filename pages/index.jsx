@@ -1,14 +1,14 @@
 import classes from "./index.module.css";
-import config from "./config.js";
 import { useEffect, useState } from "react";
 import { PrefList } from "../public/src/components/PrefList";
 import { WeatherTable } from "../public/src/components/WeatherTable/WeatherTable";
+import React from "react";
 
 export default function Home() {
   //都市名から天気を取得
   async function getWeatherList(place) {
     const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${config.MyId}`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
     );
     const weatherlist = await res.json();
     return weatherlist;
@@ -17,7 +17,7 @@ export default function Home() {
   //緯度、経度から天気を取得
   async function getCurrentWeatherList(thislat, thislon) {
     const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${thislat}&lon=${thislon}&id=524901&lang=ja&appid=${config.MyId}`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${thislat}&lon=${thislon}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
     );
     const weatherlist = await res.json();
     return weatherlist;
@@ -125,7 +125,7 @@ export default function Home() {
       <table border="0" className={classes.table}>
         <tbody>
           <WeatherTable text="天気" answer={title} />
-          <WeatherTable text="気温" answer={temperature}/>
+          <WeatherTable text="気温" answer={temperature} />
           <WeatherTable text="降水確率" answer={pop} />
         </tbody>
       </table>

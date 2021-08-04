@@ -1,62 +1,67 @@
 import classes from "./pref.module.css";
+
 const PrefectureList = [
-  { pref: "北海道", prefeng: "hokkaido" },
-  { pref: "青森", prefeng: "aomori" },
-  { pref: "岩手", prefeng: "iwate" },
-  { pref: "宮城", prefeng: "miyagi" },
-  { pref: "秋田", prefenf: "akita" },
-  { pref: "山形", prefeng: "yamagata" },
-  { pref: "福島", prefeng: "fukushima-ken" },
-  { pref: "茨城", prefeng: "ibaraki-ken" },
-  { pref: "栃木", prefeng: "tochigi-ken" },
-  { pref: "群馬", prefeng: "gunma" },
-  { pref: "埼玉", prefeng: "saitama" },
-  { pref: "千葉", prefeng: "chiba-ken" },
-  { pref: "東京", prefeng: "tokyo" },
-  { pref: "神奈川", prefeng: "kanagawa" },
-  { pref: "新潟", prefeng: "niigata-ken" },
-  { pref: "富山", prefeng: "toyama-ken" },
-  { pref: "石川", prefeng: "ishikawa" },
-  { pref: "福井", prefeng: "fukui" },
-  { pref: "山梨", prefeng: "yamanashi" },
-  { pref: "長野", prefeng: "nagano" },
-  { pref: "岐阜", prefeng: "gifu" },
-  { pref: "静岡", prefeng: "shizuoka-ken" },
-  { pref: "愛知", prefeng: "aichi" },
-  { pref: "三重", prefeng: "mie" },
-  { pref: "滋賀", prefeng: "shiga" },
-  { pref: "京都", prefeng: "kyoto" },
-  { pref: "大阪", prefeng: "osaka-fu" },
-  { pref: "兵庫", prefeng: "hyogo" },
-  { pref: "奈良", prefeng: "nara-ken" },
-  { pref: "和歌山", prefeng: "wakayama-ken" },
-  { pref: "鳥取", prefeng: "tottori-ken" },
-  { pref: "島根", prefeng: "shimane-ken" },
-  { pref: "岡山", prefeng: "okayama-ken" },
-  { pref: "広島", prefeng: "hirosima-ken" },
-  { pref: "山口", prefeng: "yamaguti-ken" },
-  { pref: "徳島", prefeng: "tokushima-ken" },
-  { pref: "香川", prefeng: "kagawa-ken" },
-  { pref: "愛媛", prefeng: "ehime-ken" },
-  { pref: "高知", prefeng: "kouti" },
-  { pref: "福岡", prefeng: "hukuoka-ken" },
-  { pref: "佐賀", prefeng: "saga-ken" },
-  { pref: "長崎", prefeng: "nagasaki-ken" },
-  { pref: "熊本", prefeng: "kumamoto-ken" },
-  { pref: "大分", prefeng: "Oita Prefecture" },
-  { pref: "宮崎", prefeng: "miyazaki-ken" },
-  { pref: "鹿児島", prefeng: "kagoshima-ken" },
-  { pref: "沖縄", prefeng: "okinawa-ken" },
+  { ja: "北海道", eng: "hokkaido" },
+  { ja: "青森", eng: "aomori" },
+  { ja: "岩手", eng: "iwate" },
+  { ja: "宮城", eng: "miyagi" },
+  { ja: "秋田", eng: "akita" },
+  { ja: "山形", eng: "yamagata" },
+  { ja: "福島", eng: "fukushima-ken" },
+  { ja: "茨城", eng: "ibaraki-ken" },
+  { ja: "栃木", eng: "tochigi-ken" },
+  { ja: "群馬", eng: "gunma" },
+  { ja: "埼玉", eng: "saitama" },
+  { ja: "千葉", eng: "chiba-ken" },
+  { ja: "東京", eng: "tokyo" },
+  { ja: "神奈川", eng: "kanagawa" },
+  { ja: "新潟", eng: "niigata-ken" },
+  { ja: "富山", eng: "toyama-ken" },
+  { ja: "石川", eng: "ishikawa" },
+  { ja: "福井", eng: "fukui" },
+  { ja: "山梨", eng: "yamanashi" },
+  { ja: "長野", eng: "nagano" },
+  { ja: "岐阜", eng: "gifu" },
+  { ja: "静岡", eng: "shizuoka-ken" },
+  { ja: "愛知", eng: "aichi" },
+  { ja: "三重", eng: "mie" },
+  { ja: "滋賀", eng: "shiga" },
+  { ja: "京都", eng: "kyoto" },
+  { ja: "大阪", eng: "osaka-fu" },
+  { ja: "兵庫", eng: "hyogo" },
+  { ja: "奈良", eng: "nara-ken" },
+  { ja: "和歌山", eng: "wakayama-ken" },
+  { ja: "鳥取", eng: "tottori-ken" },
+  { ja: "島根", eng: "shimane-ken" },
+  { ja: "岡山", eng: "okayama-ken" },
+  { ja: "広島", eng: "hirosima-ken" },
+  { ja: "山口", eng: "yamaguti-ken" },
+  { ja: "徳島", eng: "tokushima-ken" },
+  { ja: "香川", eng: "kagawa-ken" },
+  { ja: "愛媛", eng: "ehime-ken" },
+  { ja: "高知", eng: "kouti" },
+  { ja: "福岡", eng: "hukuoka-ken" },
+  { ja: "佐賀", eng: "saga-ken" },
+  { ja: "長崎", eng: "nagasaki-ken" },
+  { ja: "熊本", eng: "kumamoto-ken" },
+  { ja: "大分", eng: "Oita Prefecture" },
+  { ja: "宮崎", eng: "miyazaki-ken" },
+  { ja: "鹿児島", eng: "kagoshima-ken" },
+  { ja: "沖縄", eng: "okinawa-ken" },
 ];
 
-export function PrefList() {
+export const PrefList = () => {
   return (
     <>
       <select name="prefecture" className={classes.prefecture} id="prefecture">
-        {PrefectureList.map((list) => {
-          return <option value={list.prefeng}>{list.pref}</option>;
+        {PrefectureList.map((list, i) => {
+          return (
+            <option key={i} value={list.eng}>
+              {list.ja}
+            </option>
+          );
         })}
       </select>
     </>
   );
-}
+};

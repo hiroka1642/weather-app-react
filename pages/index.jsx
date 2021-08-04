@@ -1,58 +1,58 @@
 import classes from "./index.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PrefList } from "../public/src/components/PrefList";
 import { WeatherTable } from "../public/src/components/WeatherTable/WeatherTable";
 import React from "react";
 
 export default function Home() {
   //都市名から天気を取得
-  async function getWeatherList(place) {
+  const getWeatherFromPlace = useCallback(async (place) => {
     const res = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
     );
     const weatherlist = await res.json();
     return weatherlist;
-  }
+  }, []);
 
   //緯度、経度から天気を取得
-  async function getCurrentWeatherList(thislat, thislon) {
+  const getWeatherFromLatLng = useCallback(async (lat, lng) => {
     const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${thislat}&lon=${thislon}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
     );
     const weatherlist = await res.json();
     return weatherlist;
-  }
+  }, []);
 
   useEffect(() => {
     componentDidMount();
   }, []);
 
   // //現在地を取得（緯度、経度）し、天気を表示
-  function componentDidMount() {
+  const componentDidMount = useCallback(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        async function (pos) {
+        async (pos) => {
           await showWeatherNews(
-            getCurrentWeatherList(pos.coords.latitude, pos.coords.longitude)
+            getWeatherFromLatLng(pos.coords.latitude, pos.coords.longitude)
           );
         },
-        function () {
+        () => {
           window.alert("位置情報の取得に失敗しました");
         }
       );
     } else {
       window.alert("本アプリでは位置情報が使えません");
     }
-  }
+  }, []);
 
   //検索ボタンを押した後の処理
-  function weatherlistserch() {
+  const onClickSearch = () => {
     if (inputvalue === "") {
-      showWeatherNews(getWeatherList(prefecture.value));
+      showWeatherNews(getWeatherFromPlace(prefecture.value));
     } else {
-      showWeatherNews(getWeatherList(inputvalue));
+      showWeatherNews(getWeatherFromPlace(inputvalue));
     }
-  }
+  };
 
   //取得した天気情報に合わせてアナウンス表示
   const [news, setNews] = useState("");
@@ -63,7 +63,7 @@ export default function Home() {
   const [weathername, setWeatherName] = useState("");
   const [inputvalue, setInputvalue] = useState("");
 
-  async function showWeatherNews(getWeather) {
+  const showWeatherNews = async (getWeather) => {
     const weatherlist = await getWeather;
     //降水量に対してアナウンスを表示
     if (
@@ -109,7 +109,7 @@ export default function Home() {
     setWeatherName(`${weatherlist.city.name}`);
     setTemperature(`${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`);
     setPop(`${Math.floor(weatherlist.list[0].pop * 100)}％`);
-  }
+  };
 
   //DOM操作
   return (
@@ -124,9 +124,7 @@ export default function Home() {
       </div>
       <table border="0" className={classes.table}>
         <tbody>
-          <WeatherTable text="天気" answer={title} />
-          <WeatherTable text="気温" answer={temperature} />
-          <WeatherTable text="降水確率" answer={pop} />
+          <WeatherTable title={title} temperature={temperature} pop={pop} />
         </tbody>
       </table>
       <button className={classes.currentLocation} onClick={componentDidMount}>
@@ -141,7 +139,7 @@ export default function Home() {
           onChange={(e) => setInputvalue(e.target.value)}
           placeholder="市町村ローマ字入力"
         />
-        <button className={classes.serch} onClick={weatherlistserch}>
+        <button className={classes.serch} onClick={onClickSearch}>
           検索
         </button>
       </div>

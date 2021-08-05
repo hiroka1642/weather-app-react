@@ -45,13 +45,13 @@ export default function Home() {
   }, []);
 
   //検索ボタンを押した後の処理
-  const onClickSearch = () => {
+  const onClickSearch = useCallback(() => {
     if (inputvalue === "") {
       showWeatherNews(getWeatherFromPlace(prefecture.value));
     } else {
       showWeatherNews(getWeatherFromPlace(inputvalue));
     }
-  };
+  }, []);
 
   //取得した天気情報に合わせてアナウンス表示
   const [weatherdata, setWeatherData] = useState({
@@ -64,7 +64,7 @@ export default function Home() {
   const [news, setNews] = useState("");
   const [inputvalue, setInputvalue] = useState("");
 
-  const showWeatherNews = async (getWeather) => {
+  const showWeatherNews = useCallback(async (getWeather) => {
     const weatherlist = await getWeather;
     //降水量に対してアナウンスを表示
     if (
@@ -128,7 +128,7 @@ export default function Home() {
       default:
         break;
     }
-  };
+  }, []);
 
   //DOM操作
   return (

@@ -1,7 +1,6 @@
-import classes from "./index.module.css";
 import { useCallback, useEffect, useState } from "react";
-import { PrefList } from "../public/src/components/PrefList";
-import { WeatherTable } from "../public/src/components/WeatherTable/WeatherTable";
+import { PrefList } from "../public/src/components/Pref";
+import { WeatherTable } from "../public/src/components/WeatherTable";
 import React from "react";
 
 export default function Home() {
@@ -113,33 +112,43 @@ export default function Home() {
 
   //DOM操作
   return (
-    <div className={classes.container}>
-      <h1 className={classes.comment}>{news}</h1>
-      <p className={classes.title}>今日の天気</p>
-      <p className={classes.prefectureName}>{weathername}</p>
+    <div className="w-96 text-center text-base space-y-6 text-gray-500 m-auto mt-20">
+      <h1 className="text-2xl p-6 font-bold">{news}</h1>
+      <p>今日の天気</p>
+      <p>{weatherdata.weathername}</p>
       <div>
-        <figure>
-          <img src={icon} alt="天気" className={classes.icon} />
+        <figure className="h-40 ">
+          <img src={weatherdata.icon} alt="天気" className="w-40 m-auto" />
         </figure>
       </div>
-      <table border="0" className={classes.table}>
-        <tbody>
-          <WeatherTable title={title} temperature={temperature} pop={pop} />
+      <table border="0" className="m-auto text-left">
+        <tbody className="h-24">
+          <WeatherTable
+            title={weatherdata.title}
+            temperature={weatherdata.temperature}
+            pop={weatherdata.pop}
+          />
         </tbody>
       </table>
-      <button className={classes.currentLocation} onClick={componentDidMount}>
+      <button
+        onClick={componentDidMount}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-full m-3"
+      >
         現在地
       </button>
       <div>
         <PrefList />
         <input
           type="text"
-          className={classes.city}
           value={inputvalue}
           onChange={(e) => setInputvalue(e.target.value)}
           placeholder="市町村ローマ字入力"
+          className="shadow appearance-none border border-blue-400 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-none"
         />
-        <button className={classes.serch} onClick={onClickSearch}>
+        <button
+          onClick={onClickSearch}
+          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-5 border border-blue-500 hover:border-transparent rounded"
+        >
           検索
         </button>
       </div>

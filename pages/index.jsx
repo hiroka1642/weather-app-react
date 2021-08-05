@@ -54,12 +54,14 @@ export default function Home() {
   };
 
   //取得した天気情報に合わせてアナウンス表示
+  const [weatherdata, setWeatherData] = useState({
+    icon: "",
+    title: "",
+    temperature: "",
+    pop: "",
+    weathername: "",
+  });
   const [news, setNews] = useState("");
-  const [icon, setIcon] = useState("");
-  const [title, setTitle] = useState("");
-  const [temperature, setTemperature] = useState("");
-  const [pop, setPop] = useState("");
-  const [weathername, setWeatherName] = useState("");
   const [inputvalue, setInputvalue] = useState("");
 
   const showWeatherNews = async (getWeather) => {
@@ -85,29 +87,47 @@ export default function Home() {
     //画像表示
     switch (weatherlist.list[0].weather[0].main) {
       case "Clear":
-        setIcon("src/weather1.png");
-        setTitle("晴れ");
+        setWeatherData({
+          icon: "src/weather1.png",
+          title: "晴れ",
+          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
+          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
+          weathername: `${weatherlist.city.name}`,
+        });
         break;
       case "Clouds":
-        setIcon("src/weather2.png");
-        setTitle("曇り");
+        setWeatherData({
+          icon: "src/weather2.png",
+          title: "曇り",
+          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
+          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
+          weathername: `${weatherlist.city.name}`,
+        });
+
         break;
       case "Rain":
-        setIcon("src/weather4.png");
-        setTitle("雨");
+        setWeatherData({
+          icon: "src/weather4.png",
+          title: "雨",
+          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
+          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
+          weathername: `${weatherlist.city.name}`,
+        });
+
         break;
       case "Snow":
-        setIcon("src/weather5.png");
-        setTitle("雪");
+        setWeatherData({
+          icon: "src/weather5.png",
+          title: "雪",
+          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
+          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
+          weathername: `${weatherlist.city.name}`,
+        });
+
         break;
       default:
         break;
     }
-
-    //詳細表示
-    setWeatherName(`${weatherlist.city.name}`);
-    setTemperature(`${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`);
-    setPop(`${Math.floor(weatherlist.list[0].pop * 100)}％`);
   };
 
   //DOM操作

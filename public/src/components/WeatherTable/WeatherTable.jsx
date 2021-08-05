@@ -7,8 +7,8 @@ export const WeatherTable = (props) => {
   console.log(table);
   return (
     <>
-      {table.map((items) => [
-        <tr>
+      {table.map((items, i) => [
+        <tr key={i}>
           <td>{items.title}</td>
           <td>{items.name}</td>
         </tr>,

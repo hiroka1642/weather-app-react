@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "postcss globals.css -o dist.css",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {

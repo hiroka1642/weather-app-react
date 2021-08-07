@@ -1,39 +1,40 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect,useState } from "react";
 import { PrefList } from "../public/src/components/Pref";
-import { WeatherTable } from "../public/src/components/WeatherTable";
 import React from "react";
+import useSWR from "swr";
+import { WeatherData } from "../public/src/components/WeatherData";
 
 export default function Home() {
-  //都市名から天気を取得
-  const getWeatherFromPlace = useCallback(async (place) => {
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+  const [inputvalue, setInputvalue] = useState("");
+  const [latlng, setLatLng] = useState({ lat: "", lng: "" });
+  const [word, setWord] = useState("");
+  const [count, setCount] = useState(0);
+
+  const getWeatherFromLatLng = useCallback((lat, lng) => {
+    const { data: latlngdata, error: latlngerror } = useSWR(
+      lat
+        ? `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+        : null
     );
-    const weatherlist = await res.json();
-    return weatherlist;
+    return { latlngdata, latlngerror };
   }, []);
 
-  //緯度、経度から天気を取得
-  const getWeatherFromLatLng = useCallback(async (lat, lng) => {
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+  const getWeatherFromPlace = useCallback((place) => {
+    const { data: towndata, error: placeerror } = useSWR(
+      place
+        ? `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+        : null
     );
-    const weatherlist = await res.json();
-    return weatherlist;
-  }, []);
-
-  useEffect(() => {
-    componentDidMount();
+    return { towndata, placeerror };
   }, []);
 
   // //現在地を取得（緯度、経度）し、天気を表示
   const componentDidMount = useCallback(() => {
+    setCount(() => 0);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
-          await showWeatherNews(
-            getWeatherFromLatLng(pos.coords.latitude, pos.coords.longitude)
-          );
+          setLatLng({ lat: pos.coords.latitude, lng: pos.coords.longitude });
         },
         () => {
           window.alert("位置情報の取得に失敗しました");
@@ -44,91 +45,24 @@ export default function Home() {
     }
   }, []);
 
+  const { latlngdata, latlngerror } = getWeatherFromLatLng(latlng.lat, latlng.lng);
+  const { towndata, townerror } = getWeatherFromPlace(word);
+
+  useEffect(() => {
+    componentDidMount();
+  }, []);
+
   //検索ボタンを押した後の処理
   const onClickSearch = useCallback(() => {
+    setCount(() => 1);
+
     if (inputvalue === "") {
-      showWeatherNews(getWeatherFromPlace(prefecture.value));
+      setWord(() => prefecture.value);
     } else {
-      showWeatherNews(getWeatherFromPlace(inputvalue));
+      setWord(() => inputvalue);
     }
-  }, []);
+  }, [inputvalue]);
 
-  //取得した天気情報に合わせてアナウンス表示
-  const [weatherdata, setWeatherData] = useState({
-    icon: "",
-    title: "",
-    temperature: "",
-    pop: "",
-    weathername: "",
-  });
-  const [news, setNews] = useState("");
-  const [inputvalue, setInputvalue] = useState("");
-
-  const showWeatherNews = useCallback(async (getWeather) => {
-    const weatherlist = await getWeather;
-    //降水量に対してアナウンスを表示
-    if (
-      weatherlist.list[0].pop <= 0.2 &&
-      weatherlist.list[1].pop <= 0.2 &&
-      weatherlist.list[2].pop <= 0.2
-    ) {
-      setNews("傘はいりません");
-    } else if (
-      weatherlist.list[0].pop <= 0.5 &&
-      weatherlist.list[1].pop <= 0.5 &&
-      weatherlist.list[2].pop <= 0.5
-    ) {
-      setNews("折り畳み傘を持っていこう");
-    } else {
-      setNews("傘を忘れずに！");
-    }
-
-    //天気の詳細表示
-    //画像表示
-    switch (weatherlist.list[0].weather[0].main) {
-      case "Clear":
-        setWeatherData({
-          icon: "src/weather1.png",
-          title: "晴れ",
-          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
-          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
-          weathername: `${weatherlist.city.name}`,
-        });
-        break;
-      case "Clouds":
-        setWeatherData({
-          icon: "src/weather2.png",
-          title: "曇り",
-          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
-          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
-          weathername: `${weatherlist.city.name}`,
-        });
-
-        break;
-      case "Rain":
-        setWeatherData({
-          icon: "src/weather4.png",
-          title: "雨",
-          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
-          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
-          weathername: `${weatherlist.city.name}`,
-        });
-
-        break;
-      case "Snow":
-        setWeatherData({
-          icon: "src/weather5.png",
-          title: "雪",
-          temperature: `${Math.floor(weatherlist.list[0].main.temp - 273.15)}℃`,
-          pop: `${Math.floor(weatherlist.list[0].pop * 100)}％`,
-          weathername: `${weatherlist.city.name}`,
-        });
-
-        break;
-      default:
-        break;
-    }
-  }, []);
 
   //DOM操作
   return (

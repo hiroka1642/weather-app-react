@@ -8,7 +8,6 @@ export const WeatherTable = (props) => {
       { title: "降水確率", name: props.pop },
     ];
   }, []);
-  console.log(table);
   return (
     <>
       {table.map((items, i) => [

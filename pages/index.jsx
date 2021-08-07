@@ -67,23 +67,7 @@ export default function Home() {
   //DOM操作
   return (
     <div className="w-96 text-center text-base space-y-6 text-gray-500 m-auto mt-20">
-      <h1 className="text-2xl p-6 font-bold">{news}</h1>
-      <p>今日の天気</p>
-      <p>{weatherdata.weathername}</p>
-      <div>
-        <figure className="h-40 ">
-          <img src={weatherdata.icon} alt="天気" className="w-40 m-auto" />
-        </figure>
-      </div>
-      <table border="0" className="m-auto text-left">
-        <tbody className="h-24">
-          <WeatherTable
-            title={weatherdata.title}
-            temperature={weatherdata.temperature}
-            pop={weatherdata.pop}
-          />
-        </tbody>
-      </table>
+      <WeatherData data={count === 1 ? towndata : latlngdata} />
       <button
         onClick={componentDidMount}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-full m-3"

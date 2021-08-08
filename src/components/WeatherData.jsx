@@ -1,6 +1,6 @@
-import { WeatherTable } from ".//WeatherTable.jsx";
+import { WeatherTable } from "./WeatherTable.jsx";
 import React, { useCallback } from "react";
-import { Announce } from ".//Announce.jsx";
+import { Announce } from "./Announce.jsx";
 
 export const WeatherData = (props) => {
   const showWeatherNews = useCallback((data) => {
@@ -11,6 +11,7 @@ export const WeatherData = (props) => {
       // //画像表示
       switch (data.list[0].weather[0].main) {
         case "Clear":
+          //パスを確認する！！！
           return { weather: "晴れ", icon: "/src/weather1.png" };
         case "Clouds":
           return { weather: "曇り", icon: "/src/weather2.png" };

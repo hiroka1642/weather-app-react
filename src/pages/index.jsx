@@ -1,8 +1,7 @@
 import { useCallback, useEffect,useState } from "react";
-import { PrefList } from "../components/Pref";
-import React from "react";
 import useSWR from "swr";
 import { WeatherData } from "../components/WeatherData";
+import { PrefList } from "../components/Pref";
 
 export default function Home() {
   const [inputvalue, setInputvalue] = useState("");

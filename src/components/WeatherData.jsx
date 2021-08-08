@@ -1,5 +1,5 @@
+import { useCallback } from "react";
 import { WeatherTable } from "./WeatherTable.jsx";
-import React, { useCallback } from "react";
 import { Announce } from "./Announce.jsx";
 
 export const WeatherData = (props) => {

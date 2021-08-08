@@ -12,14 +12,14 @@ export const WeatherData = (props) => {
       switch (data.list[0].weather[0].main) {
         case "Clear":
           //パスを確認する！！！
-          return { weather: "晴れ", icon: "/src/weather1.png" };
+          return { weather: "晴れ", icon: "/weather1.png" };
         case "Clouds":
-          return { weather: "曇り", icon: "/src/weather2.png" };
+          return { weather: "曇り", icon: "/weather2.png" };
 
         case "Rain":
-          return { weather: "雨", icon: "/src/weather3.png" };
+          return { weather: "雨", icon: "/weather3.png" };
         case "Snow":
-          return { weather: "雪", icon: "/src/weather4.png" };
+          return { weather: "雪", icon: "/weather4.png" };
 
         default:
           break;

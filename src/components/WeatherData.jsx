@@ -29,7 +29,7 @@ export const WeatherData = (props) => {
 
   //DOM操作
   return (
-    <div className="w-96 text-center text-base space-y-6 text-gray-500 m-auto mt-20">
+    <>
       <h1 className="text-2xl p-6 font-bold">
         {props.data && <Announce data={props.data} />}
       </h1>
@@ -60,6 +60,6 @@ export const WeatherData = (props) => {
           ) : null}
         </tbody>
       </table>
-    </div>
+    </>
   );
 };

@@ -69,7 +69,7 @@ export default function Home() {
 
   //DOM操作
   return (
-    <div className="w-96 text-center text-base space-y-6 text-gray-500 m-auto mt-20">
+    <div className="w-96 text-center text-base space-y-6 text-gray-500 m-auto mt-10">
       <WeatherData data={count === 1 ? towndata : latlngdata} />
       <button
         // eslint-disable-next-line react/jsx-handler-names
@@ -85,11 +85,11 @@ export default function Home() {
           value={inputvalue}
           onChange={handleSetInputValue}
           placeholder="市町村ローマ字入力"
-          className="shadow appearance-none border border-blue-400 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-none"
+          className="shadow appearance-none border border-blue-400 rounded w-44 py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-none"
         />
         <button
           onClick={handleSearch}
-          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-5 border border-blue-500 hover:border-transparent rounded"
+          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
         >
           検索
         </button>

@@ -38,6 +38,7 @@ export const WeatherData = (props) => {
       <div>
         <figure className="h-40 ">
           {props.data ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={showWeatherNews(props.data).icon}
               alt="天気"

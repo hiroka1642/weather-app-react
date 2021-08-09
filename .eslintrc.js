@@ -3,8 +3,8 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    node: true,
   },
-  extends: "plugin:react/recommended",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -13,14 +13,30 @@ module.exports = {
     sourceType: "module",
   },
   extends: [
-    // "next",
-    // "next/core-web-vitals",
-    // "eslint:recommended",
-    // "plugin:react/recommended",
-    // "plugin:react-hooks/recommended",
+    "next",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "prettier",
   ],
   plugins: ["react"],
-  rules: { "no-undef": "off", "no-unused-vars": "off" },
+  rules: {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/display-name": "error",
+    "react/jsx-handler-names": [
+      "error",
+      {
+        eventHandlerPrefix: "handle",
+        eventHandlerPropPrefix: "on",
+        checkLocalVariables: true,
+        checkInlineFunction: true,
+      },
+    ],
+    "react/destructuring-assignment": ["error", "never"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+  },
 };

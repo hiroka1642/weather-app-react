@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 const PrefectureList = [
   { ja: "北海道", eng: "hokkaido" },
   { ja: "青森", eng: "aomori" },
@@ -48,12 +50,21 @@ const PrefectureList = [
   { ja: "沖縄", eng: "okinawa-ken" },
 ];
 
-export const PrefList = () => {
+export const PrefList = (props) => {
+  const handlePrefectureValue = useCallback(
+    (e) => {
+      props.setPrefectureValue(e.target.value);
+    },
+    [props]
+  );
+
   return (
     <>
       <select
         name="prefecture"
         id="prefecture"
+        onBlur={handlePrefectureValue}
+        onChange={handlePrefectureValue}
         className="g-white hover:bg-gray-100 text-gray-600 font-semibold py-2 px-1 border border-blue-400 rounded shadow"
       >
         {PrefectureList.map((list, i) => {

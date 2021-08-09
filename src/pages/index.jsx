@@ -5,6 +5,7 @@ import { PrefList } from "../components/Pref";
 
 export default function Home() {
   const [inputvalue, setInputvalue] = useState("");
+  const [prefecturevalue, setPrefectureValue] = useState("hokkaido");
   const [latlng, setLatLng] = useState({ lat: "", lng: "" });
   const [word, setWord] = useState("");
   const [count, setCount] = useState(0);
@@ -56,11 +57,15 @@ export default function Home() {
     setCount(() => 1);
 
     if (inputvalue === "") {
-      setWord(() => prefecture.value);
+      setWord(() => prefecturevalue);
     } else {
       setWord(() => inputvalue);
     }
-  }, [inputvalue]);
+  }, [inputvalue, prefecturevalue]);
+
+  const handleSetInputValue = useCallback((e) => {
+    setInputvalue(e.target.value);
+  }, []);
 
   //DOM操作
   return (
@@ -74,12 +79,11 @@ export default function Home() {
         現在地
       </button>
       <div>
-        <PrefList />
+        <PrefList prefecturevalue setPrefectureValue={setPrefectureValue} />
         <input
           type="text"
           value={inputvalue}
-          // eslint-disable-next-line react/jsx-handler-names
-          onChange={(e) => setInputvalue(e.target.value)}
+          onChange={handleSetInputValue}
           placeholder="市町村ローマ字入力"
           className="shadow appearance-none border border-blue-400 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-none"
         />

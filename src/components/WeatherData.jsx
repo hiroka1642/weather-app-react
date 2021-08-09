@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { WeatherTable } from "./WeatherTable.jsx";
 import { Announce } from "./Announce.jsx";
+import Example from "./Loading.jsx";
 
 export const WeatherData = (props) => {
   const showWeatherNews = useCallback((data) => {
@@ -26,6 +27,22 @@ export const WeatherData = (props) => {
       }
     }
   }, []);
+
+  if (!props.error && !props.data) {
+    return (
+      <div className="w-25 ma2 h-96 items-center justify-center flex flex-column flex-wrap`">
+        <Example />
+      </div>
+    );
+  }
+
+  if (props.error) {
+    return <div>エラーが発生したため、天気情報を読み込めませんでした</div>;
+  }
+
+  if (props.data.length === 0) {
+    return <div>データが見つかりませんでした。</div>;
+  }
 
   //DOM操作
   return (

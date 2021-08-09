@@ -16,6 +16,7 @@ export default function Home() {
         ? `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
         : null
     );
+
     return { latlngdata, latlngerror };
   };
 
@@ -45,8 +46,11 @@ export default function Home() {
     }
   }, []);
 
-  const { latlngdata } = GetWeatherFromLatLng(latlng.lat, latlng.lng);
-  const { towndata } = GetWeatherFromPlace(word);
+  const { latlngdata, latlngerror } = GetWeatherFromLatLng(
+    latlng.lat,
+    latlng.lng
+  );
+  const { towndata, placeerror } = GetWeatherFromPlace(word);
 
   useEffect(() => {
     componentDidMount();
@@ -69,8 +73,11 @@ export default function Home() {
 
   //DOM操作
   return (
-    <div className="w-96 text-center text-base space-y-6 text-gray-500 m-auto mt-10">
-      <WeatherData data={count === 1 ? towndata : latlngdata} />
+    <div className=" w-96 text-center text-base  space-y-6 text-gray-500 m-auto mt-10">
+      <WeatherData
+        data={count === 1 ? towndata : latlngdata}
+        error={count === 1 ? placeerror : latlngerror}
+      />
       <button
         // eslint-disable-next-line react/jsx-handler-names
         onClick={componentDidMount}

@@ -2,13 +2,16 @@ import { useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import { WeatherData } from "../components/WeatherData";
 import { PrefList } from "../components/Pref";
+import { SearchBtn } from "../components/btn/SearchBtn";
+import { GeolocationBtn } from "../components/btn/GeolocationBtn";
+import { Input } from "../components/input/input";
 
 export default function Home() {
   const [inputvalue, setInputvalue] = useState("");
   const [prefecturevalue, setPrefectureValue] = useState("hokkaido");
   const [latlng, setLatLng] = useState({ lat: "", lng: "" });
   const [word, setWord] = useState("");
-  const [count, setCount] = useState(0);
+  const [clickSeatch, setClickSearch] = useState(false);
 
   const GetWeatherFromLatLng = (lat, lng) => {
     const { data: latlngdata, error: latlngerror } = useSWR(
@@ -31,7 +34,7 @@ export default function Home() {
 
   // //現在地を取得（緯度、経度）し、天気を表示
   const componentDidMount = useCallback(() => {
-    setCount(() => 0);
+    setClickSearch(false);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
@@ -58,7 +61,7 @@ export default function Home() {
 
   //検索ボタンを押した後の処理
   const handleSearch = useCallback(() => {
-    setCount(() => 1);
+    setClickSearch(true);
 
     if (inputvalue === "") {
       setWord(() => prefecturevalue);
@@ -67,40 +70,18 @@ export default function Home() {
     }
   }, [inputvalue, prefecturevalue]);
 
-  const handleSetInputValue = useCallback((e) => {
-    setInputvalue(e.target.value);
-  }, []);
-
   //DOM操作
   return (
     <div className=" w-96 text-center text-base  space-y-6 text-gray-500 m-auto mt-10">
       <WeatherData
-        data={count === 1 ? towndata : latlngdata}
-        error={count === 1 ? placeerror : latlngerror}
+        data={clickSeatch ? towndata : latlngdata}
+        error={clickSeatch ? placeerror : latlngerror}
       />
-      <button
-        // eslint-disable-next-line react/jsx-handler-names
-        onClick={componentDidMount}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-full m-3"
-      >
-        現在地
-      </button>
-      <div>
-        <PrefList prefecturevalue setPrefectureValue={setPrefectureValue} />
-        <input
-          type="text"
-          value={inputvalue}
-          onChange={handleSetInputValue}
-          placeholder="市町村ローマ字入力"
-          className="shadow appearance-none border border-blue-400 rounded w-44 py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-none"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-        >
-          検索
-        </button>
-      </div>
+      {/* eslint-disable-next-line react/jsx-handler-names */}
+      <GeolocationBtn onClick={componentDidMount}>現在地</GeolocationBtn>
+      <PrefList prefecturevalue setPrefectureValue={setPrefectureValue} />
+      <Input inputvalue={inputvalue} setInputvalue={setInputvalue} />
+      <SearchBtn onClick={handleSearch}>検索</SearchBtn>
     </div>
   );
 }

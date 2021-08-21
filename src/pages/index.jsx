@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import useSWR from "swr";
 import { WeatherData } from "../components/WeatherData";
 import { PrefList } from "../components/Pref";
 import { SearchBtn } from "../components/btn/SearchBtn";
 import { GeolocationBtn } from "../components/btn/GeolocationBtn";
 import { Input } from "../components/input/input";
+import { GetWeatherFromLatLng } from "../components/Fetch/GetWeatherFromLatLng ";
+import { GetWeatherFromPlace } from "../components/Fetch/GetWeatherFromPlace";
 
 export default function Home() {
   const [inputvalue, setInputvalue] = useState("");
@@ -12,25 +13,6 @@ export default function Home() {
   const [latlng, setLatLng] = useState({ lat: "", lng: "" });
   const [word, setWord] = useState("");
   const [clickSeatch, setClickSearch] = useState(false);
-
-  const GetWeatherFromLatLng = (lat, lng) => {
-    const { data: latlngdata, error: latlngerror } = useSWR(
-      lat
-        ? `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
-        : null
-    );
-
-    return { latlngdata, latlngerror };
-  };
-
-  const GetWeatherFromPlace = (place) => {
-    const { data: towndata, error: placeerror } = useSWR(
-      place
-        ? `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
-        : null
-    );
-    return { towndata, placeerror };
-  };
 
   // //現在地を取得（緯度、経度）し、天気を表示
   const componentDidMount = useCallback(() => {

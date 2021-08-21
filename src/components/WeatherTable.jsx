@@ -3,7 +3,7 @@ import { memo, useMemo } from "react";
 // eslint-disable-next-line react/display-name
 export const WeatherTable = memo((props) => {
   const weatherdata = {
-    name: props.showWeatherNews(props.data).weather,
+    name: props.weather,
     temperature: `${Math.floor(props.data.list[0].main.temp - 273.15)}℃`,
     pop: `${Math.floor(props.data.list[0].pop * 100)}％`,
   };

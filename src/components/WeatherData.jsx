@@ -1,18 +1,16 @@
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { WeatherTable } from "./WeatherTable.jsx";
 import { Announce } from "./Announce.jsx";
 import Example from "./Loading.jsx";
 
-export const WeatherData = (props) => {
+// eslint-disable-next-line react/display-name
+export const WeatherData =memo( (props) => {
   const showWeatherNews = useCallback((data) => {
     if (data === undefined) {
       return;
     } else {
-      // //天気の詳細表示
-      // //画像表示
       switch (data.list[0].weather[0].main) {
         case "Clear":
-          //パスを確認する！！！
           return { weather: "晴れ", icon: "/weather1.png" };
         case "Clouds":
           return { weather: "曇り", icon: "/weather2.png" };
@@ -64,19 +62,7 @@ export const WeatherData = (props) => {
           ) : null}
         </figure>
       </div>
-      <table border="0" className="m-auto text-left">
-        <tbody className="h-24">
-          {props.data ? (
-            <WeatherTable
-              title={showWeatherNews(props.data).weather}
-              temperature={`${Math.floor(
-                props.data.list[0].main.temp - 273.15
-              )}℃`}
-              pop={`${Math.floor(props.data.list[0].pop * 100)}％`}
-            />
-          ) : null}
-        </tbody>
-      </table>
+      <WeatherTable data={props.data} showWeatherNews={showWeatherNews} />
     </>
   );
-};
+});

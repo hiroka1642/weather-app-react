@@ -1,4 +1,7 @@
-export const Announce = (props) => {
+import { memo } from "react";
+
+// eslint-disable-next-line react/display-name
+export const Announce =memo( (props) => {
   if (
     props.data.list[0].pop <= 0.2 &&
     props.data.list[1].pop <= 0.2 &&
@@ -14,4 +17,4 @@ export const Announce = (props) => {
   } else {
     return "傘を忘れずに！";
   }
-};
+});

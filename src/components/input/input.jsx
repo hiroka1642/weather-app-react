@@ -1,10 +1,13 @@
-import { useCallback} from "react";
+import { memo, useCallback } from "react";
 
-export const Input = (props) => {
-
-  const handleSetInputValue = useCallback((e) => {
-    props.setInputvalue(e.target.value);
-  }, []);
+// eslint-disable-next-line react/display-name
+export const Input = memo((props) => {
+  const handleSetInputValue = useCallback(
+    (e) => {
+      props.setInputvalue(e.target.value);
+    },
+    [props]
+  );
 
   return (
     <input
@@ -15,4 +18,4 @@ export const Input = (props) => {
       className="shadow appearance-none border border-blue-400 rounded w-44 py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-none"
     />
   );
-};
+});

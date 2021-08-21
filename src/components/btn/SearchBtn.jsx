@@ -1,4 +1,7 @@
-export const SearchBtn = (props) => {
+import { memo } from "react";
+
+// eslint-disable-next-line react/display-name
+export const SearchBtn = memo((props) => {
   return (
     <button
       onClick={props.onClick}
@@ -7,4 +10,4 @@ export const SearchBtn = (props) => {
       {props.children}
     </button>
   );
-};
+});

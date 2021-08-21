@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 
 const PrefectureList = [
   { ja: "北海道", eng: "hokkaido" },
@@ -50,7 +50,8 @@ const PrefectureList = [
   { ja: "沖縄", eng: "okinawa-ken" },
 ];
 
-export const PrefList = (props) => {
+// eslint-disable-next-line react/display-name
+export const PrefList = memo((props) => {
   const handlePrefectureValue = useCallback(
     (e) => {
       props.setPrefectureValue(e.target.value);
@@ -77,4 +78,4 @@ export const PrefList = (props) => {
       </select>
     </>
   );
-};
+});

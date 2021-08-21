@@ -1,11 +1,16 @@
+import { memo } from "react";
 import useSWR from "swr";
+import { WeatherData } from "../WeatherData";
 
-export const GetWeatherFromLatLng = (lat, lng) => {
+// eslint-disable-next-line react/display-name
+export const GetWeatherFromLatLng = memo((props) => {
+  console.log("componentDidmount");
+
   const { data: latlngdata, error: latlngerror } = useSWR(
-    lat
-      ? `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+    props.lat
+      ? `https://api.openweathermap.org/data/2.5/forecast?lat=${props.lat}&lon=${props.lng}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
       : null
   );
 
-  return { latlngdata, latlngerror };
-};
+  return <WeatherData data={latlngdata} error={latlngerror} />;
+});

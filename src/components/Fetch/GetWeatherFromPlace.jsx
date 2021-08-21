@@ -1,10 +1,15 @@
+import { memo } from "react";
 import useSWR from "swr";
+import { WeatherData } from "../WeatherData";
 
-export const GetWeatherFromPlace = (place) => {
+// eslint-disable-next-line react/display-name
+export const GetWeatherFromPlace = memo((props) => {
+  console.log(props);
+
   const { data: towndata, error: placeerror } = useSWR(
-    place
-      ? `https://api.openweathermap.org/data/2.5/forecast?q=${place}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+    props.place
+      ? `https://api.openweathermap.org/data/2.5/forecast?q=${props.place}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
       : null
   );
-  return { towndata, placeerror };
-};
+  return <WeatherData data={towndata} error={placeerror} />;
+});

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { PrefList } from "../components/Pref";
+import { PrefList } from "../components/PrefList";
 import { SearchBtn } from "../components/btn/SearchBtn";
 import { GeolocationBtn } from "../components/btn/GeolocationBtn";
 import { Input } from "../components/input/input";

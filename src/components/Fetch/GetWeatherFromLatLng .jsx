@@ -4,7 +4,6 @@ import { WeatherData } from "../WeatherData";
 
 // eslint-disable-next-line react/display-name
 export const GetWeatherFromLatLng = memo((props) => {
-  console.log("componentDidmount");
 
   const { data: latlngdata, error: latlngerror } = useSWR(
     props.lat

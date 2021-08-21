@@ -54,9 +54,11 @@ export default function Home() {
         <GetWeatherFromLatLng lat={latlng.lat} lng={latlng.lng} />
       )}
       <GeolocationBtn onClick={handleGeolocationSearch}>現在地</GeolocationBtn>
-      <PrefList prefecturevalue setPrefectureValue={setPrefectureValue} />
-      <Input inputvalue={inputvalue} setInputvalue={setInputvalue} />
-      <SearchBtn onClick={handleSearch}>検索</SearchBtn>
+      <div>
+        <PrefList prefecturevalue setPrefectureValue={setPrefectureValue} />
+        <Input inputvalue={inputvalue} setInputvalue={setInputvalue} />
+        <SearchBtn onClick={handleSearch}>検索</SearchBtn>
+      </div>
     </div>
   );
 }

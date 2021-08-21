@@ -35,11 +35,19 @@ export const WeatherData =memo( (props) => {
   }
 
   if (props.error) {
-    return <div>エラーが発生したため、天気情報を読み込めませんでした</div>;
+    return (
+      <div className="w-25 ma2 h-96 p-14 items-center justify-center flex flex-column flex-wrap`">
+        <p>エラーが発生したため、天気情報を読み込めませんでした</p>
+      </div>
+    );
   }
 
-  if (props.data.length === 0) {
-    return <div>データが見つかりませんでした。</div>;
+  if (props.data.cod === "404") {
+    return (
+      <div className="w-25 ma2 h-96 p-14 items-center justify-center flex flex-column flex-wrap`">
+        <p>天気情報が見つかりませんでした</p>
+      </div>
+    );
   }
 
   //DOM操作
@@ -62,7 +70,10 @@ export const WeatherData =memo( (props) => {
           ) : null}
         </figure>
       </div>
-      <WeatherTable data={props.data} showWeatherNews={showWeatherNews} />
+      <WeatherTable
+        data={props.data}
+        weather={showWeatherNews(props.data).weather}
+      />
     </>
   );
 });

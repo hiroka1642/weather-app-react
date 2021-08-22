@@ -6,3 +6,10 @@ export const GlobalState = atom({
     searchword: "hokkaido",
   },
 });
+
+export const LatLngState = atom({
+  key: "LatLngState ",
+  default: {
+    latlng: { lat: null, lng: null },
+  },
+});

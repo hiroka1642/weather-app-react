@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { GeolocationBtn } from "../components/btn/GeolocationBtn";
-import { GetWeatherFromLatLng } from "../components/Fetch/GetWeatherFromLatLng ";
-import { GetWeatherFromPlace } from "../components/Fetch/GetWeatherFromPlace";
-import { Search } from "../components/Search/Search";
+import { useSetRecoilState } from "recoil";
+import { GeolocationBtn } from "../components/Atoms/btn/GeolocationBtn";
+import { GetWeatherFromLatLng } from "../components/Organisms/Fetch/GetWeatherFromLatLng ";
+import { GetWeatherFromPlace } from "../components/Organisms/Fetch/GetWeatherFromPlace";
+import { Search } from "../components/Organisms/Search/Search";
+import { LatLngState } from "../components/store/globalState";
 
 export default function Home() {
-  const [latlng, setLatLng] = useState({ lat: null, lng: null });
+  const setLatlngState = useSetRecoilState(LatLngState);
   const [onsearchBtn, setOnSearchBtn] = useState(false);
 
   // //現在地を取得（緯度、経度）
@@ -14,10 +16,12 @@ export default function Home() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
-          setLatLng(() => ({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-          }));
+          setLatlngState({
+            latlng: {
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+            },
+          });
         },
         () => {
           window.alert("位置情報の取得に失敗しました");
@@ -41,11 +45,7 @@ export default function Home() {
   //DOM操作
   return (
     <div className=" w-96 text-center text-base  space-y-6 text-gray-500 m-auto mt-10">
-      {onsearchBtn ? (
-        <GetWeatherFromPlace />
-      ) : (
-        <GetWeatherFromLatLng lat={latlng.lat} lng={latlng.lng} />
-      )}
+      {onsearchBtn ? <GetWeatherFromPlace /> : <GetWeatherFromLatLng />}
       <GeolocationBtn onClick={handleGeolocationSearch}>現在地</GeolocationBtn>
       <Search setOnSearchBtn={setOnSearchBtn} />
     </div>

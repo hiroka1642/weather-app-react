@@ -6,10 +6,3 @@ export const GlobalState = atom({
     searchword: "hokkaido",
   },
 });
-
-export const OnSearchState = atom({
-  key: "OnSearchState",
-  default: {
-    onSearchBtn: false,
-  },
-});

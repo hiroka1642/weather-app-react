@@ -1,23 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
-import { PrefList } from "../components/PrefList";
-import { SearchBtn } from "../components/btn/SearchBtn";
 import { GeolocationBtn } from "../components/btn/GeolocationBtn";
-import { Input } from "../components/input/input";
 import { GetWeatherFromLatLng } from "../components/Fetch/GetWeatherFromLatLng ";
 import { GetWeatherFromPlace } from "../components/Fetch/GetWeatherFromPlace";
+import { Search } from "../components/Search/Search";
 
 export default function Home() {
   const [latlng, setLatLng] = useState({ lat: null, lng: null });
-  const [inputvalue, setInputvalue] = useState("");
-  const [prefecturevalue, setPrefectureValue] = useState("hokkaido");
-  const [clickSeatchBtn, setClickSearchBtn] = useState(false);
+  const [onsearchBtn, setOnSearchBtn] = useState(false);
 
   // //現在地を取得（緯度、経度）
   const componentDidMount = useCallback(() => {
+    setOnSearchBtn(false);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
-          setLatLng({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+          setLatLng(() => ({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          }));
         },
         () => {
           window.alert("位置情報の取得に失敗しました");
@@ -30,35 +30,24 @@ export default function Home() {
 
   useEffect(() => {
     componentDidMount();
-  }, [componentDidMount]);
+  }, []);
 
   //現在地ボタンを押した後の処理
-  const handleGeolocationSearch = () => {
+  const handleGeolocationSearch = useCallback(() => {
     componentDidMount();
-    setClickSearchBtn(false);
-  };
-
-  //検索ボタンを押した後の処理
-  const handleSearch = useCallback(() => {
-    setClickSearchBtn(true);
   }, []);
+  console.log("index");
 
   //DOM操作
   return (
     <div className=" w-96 text-center text-base  space-y-6 text-gray-500 m-auto mt-10">
-      {clickSeatchBtn ? (
-        <GetWeatherFromPlace
-          place={inputvalue === "" ? prefecturevalue : inputvalue}
-        />
+      {onsearchBtn ? (
+        <GetWeatherFromPlace />
       ) : (
         <GetWeatherFromLatLng lat={latlng.lat} lng={latlng.lng} />
       )}
       <GeolocationBtn onClick={handleGeolocationSearch}>現在地</GeolocationBtn>
-      <div>
-        <PrefList prefecturevalue setPrefectureValue={setPrefectureValue} />
-        <Input inputvalue={inputvalue} setInputvalue={setInputvalue} />
-        <SearchBtn onClick={handleSearch}>検索</SearchBtn>
-      </div>
+      <Search setOnSearchBtn={setOnSearchBtn} />
     </div>
   );
 }

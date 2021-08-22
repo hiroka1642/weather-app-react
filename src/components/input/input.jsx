@@ -4,9 +4,9 @@ import { memo, useCallback } from "react";
 export const Input = memo((props) => {
   const handleSetInputValue = useCallback(
     (e) => {
-      props.setInputvalue(e.target.value);
+      props.setInputvalue(() => e.target.value);
     },
-    [props]
+    []
   );
 
   return (

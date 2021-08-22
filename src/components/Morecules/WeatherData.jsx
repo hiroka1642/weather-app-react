@@ -1,7 +1,7 @@
 import { memo, useCallback } from "react";
-import { WeatherTable } from "./WeatherTable.jsx";
-import { Announce } from "./Announce.jsx";
-import Example from "./LoadingIcon.jsx";
+import { WeatherTable } from "../Atoms/WeatherTable.jsx";
+import { Announce } from "../Atoms/Announce.jsx";
+import Example from "../Atoms/LoadingIcon.jsx";
 
 // eslint-disable-next-line react/display-name
 export const WeatherData =memo( (props) => {

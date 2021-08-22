@@ -1,9 +1,9 @@
-import { PrefList } from "../PrefList";
-import { Input } from "../input/input";
-import { SearchBtn } from "../btn/SearchBtn";
+import { PrefList } from "../../Atoms/PrefList";
+import { Input } from "../../Atoms/input/input";
+import { SearchBtn } from "../../Atoms/btn/SearchBtn";
 import { memo, useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { GlobalState } from "../store/globalState";
+import { GlobalState } from "../../store/globalState";
 
 // eslint-disable-next-line react/display-name
 export const Search = memo((props) => {

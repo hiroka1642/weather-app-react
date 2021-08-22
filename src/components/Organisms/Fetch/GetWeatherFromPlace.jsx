@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { useRecoilValue } from "recoil";
 import useSWR from "swr";
-import { GlobalState } from "../store/globalState";
-import { WeatherData } from "../WeatherData";
+import { GlobalState } from "../../store/globalState";
+import { WeatherData } from "../../Morecules/WeatherData";
 
 // eslint-disable-next-line react/display-name
 export const GetWeatherFromPlace = memo(() => {

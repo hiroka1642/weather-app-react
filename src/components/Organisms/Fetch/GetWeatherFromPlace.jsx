@@ -7,10 +7,10 @@ import { WeatherData } from "../../Morecules/WeatherData";
 // eslint-disable-next-line react/display-name
 export const GetWeatherFromPlace = memo(() => {
   const globalState = useRecoilValue(GlobalState);
-  const { data: towndata, error: placeerror } = useSWR(
+  const { data, error } = useSWR(
     globalState.searchword
       ? `https://api.openweathermap.org/data/2.5/forecast?q=${globalState.searchword}&id=524901&lang=ja&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
       : null
   );
-  return <WeatherData data={towndata} error={placeerror} />;
+  return <WeatherData data={data} error={error} />;
 });
